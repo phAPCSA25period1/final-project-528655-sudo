@@ -5,13 +5,15 @@ public class Counselor
     public Counselor(String name)
     {
         this.name = name;
-
     }
 
-    public String getName() {return name;}
+    public String getName()
+    {
+        return name;
+    }
 
     public String toString()
     {
-        return "Counselor:" + name;
+        return "Counselor: " + name;
     }
 }

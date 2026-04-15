@@ -1,14 +1,37 @@
+import java.util.Scanner;
+
 public class Main
 {
     public static void main(String[] args)
     {
-        Student s = new Student("Eva", 11);
-        Counselor c = new Counselor("Ms.Rivera");
-        Appointment a = new Appointment(s, c, "Monday", "9:00AM");
+        Scanner input = new Scanner(System.in);
 
+        // Ask for user info
+        System.out.print("Enter full name: ");
+        String name = input.nextLine();
+
+        System.out.print("Enter grade level: ");
+        int grade = input.nextInt();
+        input.nextLine(); // clear buffer
+
+        System.out.print("Enter appointment day: ");
+        String day = input.nextLine();
+
+        System.out.print("Enter appointment time: ");
+        String time = input.nextLine();
+
+        // Create student (counselor is assigned automatically)
+        Student s = new Student(name, grade);
+
+        // Use student's counselor
+        Appointment a = new Appointment(s, s.getCounselor(), day, time);
+
+        // Print everything
+        System.out.println("\n--- Appointment Info ---");
         System.out.println(s);
-        System.out.println(c);
+        System.out.println(s.getCounselor());
         System.out.println(a);
 
+        input.close();
     }
 }
