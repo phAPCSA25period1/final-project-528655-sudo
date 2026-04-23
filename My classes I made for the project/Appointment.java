@@ -23,7 +23,7 @@ public class Appointment
 
     public String toString()
     {
-        return 
+        return
                "\n    APPOINTMENT CONFIRMATION  " +
 
                "\n Student:      " + student.getName() +
@@ -35,6 +35,20 @@ public class Appointment
                "\n Meeting Type: " + meetingType +
                "\n Reason:       " + reason +
                "\n Notes:        " + notes +
+EVA FIX THIS TAKE OUT THE OVERRIDE WHOLE PART IT IS BREAKING THE CODE KEEP EVERYTHING ABOVE THIS MESSAGE AND DELETE EVERYTHING BELOW
+
+               @Override
+public String toString()
+{
+    return "Name: " + name +
+           "\nGrade: " + grade +
+           "\nDay: " + day +
+           "\nDate: " + date +
+           "\nTime: " + time +
+           "\nReason: " + reason +
+           "\nMeeting Type: " + meetingType +
+           "\nNotes: " + notes;
+}
 
     }
 }

@@ -6,7 +6,7 @@ public class Main
     {
         Scanner input = new Scanner(System.in);
 
-        
+
         System.out.println("  School Counselor Scheduler  ");
 
 
@@ -110,3 +110,4 @@ public class Main
         }
     }
 }
+
