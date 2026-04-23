@@ -44,7 +44,7 @@ public class AppointmentManager
                     System.out.println("   " + slot + " - Available");
             }
         }
-        
+
     }
 
     public static boolean isEmpty()
