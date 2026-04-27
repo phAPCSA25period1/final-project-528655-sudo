@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main
@@ -6,19 +7,22 @@ public class Main
     {
         Scanner input = new Scanner(System.in);
 
-
         System.out.println("  School Counselor Scheduler  ");
 
+        // Show the full calendar before anything else
+        AppointmentManager.showAvailability();
+        System.out.println();
 
-        // Ask for user info
+        // Name
         System.out.print("Enter full name: ");
         String name = input.nextLine();
 
+        // Grade
         System.out.print("Enter grade level (9-12): ");
         int grade = input.nextInt();
-        input.nextLine(); // clear buffer
+        input.nextLine();
 
-        // Day validation - no weekends
+        // Day validation
         String day = "";
         boolean validDay = false;
         while (!validDay)
@@ -27,8 +31,8 @@ public class Main
             day = input.nextLine().trim();
 
             if (day.equalsIgnoreCase("Saturday") || day.equalsIgnoreCase("Sunday"))
-                System.out.println("Sorry, appointments are not available on weekends. Please choose a weekday.");
-            else if (day.equalsIgnoreCase("Monday") || day.equalsIgnoreCase("Tuesday") ||
+                System.out.println("Sorry, appointments are not available on weekends.");
+            else if (day.equalsIgnoreCase("Monday")    || day.equalsIgnoreCase("Tuesday") ||
                      day.equalsIgnoreCase("Wednesday") || day.equalsIgnoreCase("Thursday") ||
                      day.equalsIgnoreCase("Friday"))
                 validDay = true;
@@ -39,29 +43,56 @@ public class Main
         System.out.print("Enter appointment date (ex: May 5): ");
         String date = input.nextLine();
 
-        // Time validation - must be within 8:45 AM - 3:33 PM
+        // Time slot picker
         String time = "";
-        boolean validTime = false;
-        while (!validTime)
+        boolean slotPicked = false;
+
+        while (!slotPicked)
         {
-            System.out.print("Enter appointment time (8:45 AM - 3:33 PM): ");
-            time = input.nextLine().trim();
+            List<String> available = AppointmentManager.getAvailableSlots(day);
 
-            int minutes = convertToMinutes(time);
+            if (available.isEmpty())
+            {
+                System.out.println("Sorry, all slots on " + day + " are fully booked!");
+                System.out.print("Enter a different day: ");
+                day = input.nextLine().trim();
+                continue;
+            }
 
-            if (minutes == -1)
-                System.out.println("Invalid format. Please use format like 10:00 AM or 2:30 PM.");
-            else if (minutes < convertToMinutes("8:45 AM"))
-                System.out.println("Too early! School hours start at 8:45 AM.");
-            else if (minutes > convertToMinutes("3:33 PM"))
-                System.out.println("Too late! School hours end at 3:33 PM.");
-            else
-                validTime = true;
+            System.out.println("\nAvailable slots for " + day + ":");
+            for (int i = 0; i < available.size(); i++)
+                System.out.printf("  %2d. %s%n", i + 1, available.get(i));
+
+            System.out.print("Pick a slot number: ");
+            String choice = input.nextLine().trim();
+
+            int index;
+            try
+            {
+                index = Integer.parseInt(choice) - 1;
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Please enter a number from the list.");
+                continue;
+            }
+
+            if (index < 0 || index >= available.size())
+            {
+                System.out.println("That number isn't on the list. Try again.");
+                continue;
+            }
+
+            time = available.get(index);
+            slotPicked = true;
+            System.out.println("Slot confirmed: " + time);
         }
 
+        // Reason
         System.out.print("Enter reason for appointment: ");
         String reason = input.nextLine();
 
+        // Meeting type
         System.out.println("Select meeting type:");
         System.out.println("  1. In-Person");
         System.out.println("  2. Virtual");
@@ -69,45 +100,20 @@ public class Main
         String meetingChoice = input.nextLine();
         String meetingType = meetingChoice.equals("1") ? "In-Person" : "Virtual";
 
+        // Notes
         System.out.print("Any additional notes? (press Enter to skip): ");
         String notes = input.nextLine();
         if (notes.isEmpty())
             notes = "None";
 
-        // Create student (counselor assigned automatically by last name)
+        // Create student + appointment, then register it
         Student s = new Student(name, grade);
-
-        // Create appointment
         Appointment a = new Appointment(s, s.getCounselor(), day, date, time, reason, meetingType, notes);
 
-        // Print confirmation
+        AppointmentManager.add(a);  // <-- this is what marks the slot as taken
+
         System.out.println(a);
 
         input.close();
     }
-
-    // Converts "10:30 AM" or "2:45 PM" into total minutes since midnight
-    public static int convertToMinutes(String time)
-    {
-        try
-        {
-            String[] parts = time.split(" ");
-            String[] hourMin = parts[0].split(":");
-            int hours = Integer.parseInt(hourMin[0]);
-            int minutes = Integer.parseInt(hourMin[1]);
-            String period = parts[1].toUpperCase();
-
-            if (period.equals("PM") && hours != 12)
-                hours += 12;
-            if (period.equals("AM") && hours == 12)
-                hours = 0;
-
-            return hours * 60 + minutes;
-        }
-        catch (Exception e)
-        {
-            return -1; // invalid format
-        }
-    }
 }
-

@@ -14,6 +14,6 @@ public class Counselor
 
     public String toString()
     {
-        return "Counselor: " + name;
+        return name;
     }
 }

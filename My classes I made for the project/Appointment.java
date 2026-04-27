@@ -21,11 +21,21 @@ public class Appointment
         this.notes = notes;
     }
 
+    // ── Getters needed by AppointmentManager ──
+    public String getDay()
+    {
+        return day;
+    }
+
+    public String getTime()
+    {
+        return time;
+    }
+
     public String toString()
     {
         return
                "\n    APPOINTMENT CONFIRMATION  " +
-
                "\n Student:      " + student.getName() +
                "\n Grade:        " + student.getGradeLevel() +
                "\n Counselor:    " + counselor.getName() +
@@ -34,21 +44,6 @@ public class Appointment
                "\n Time:         " + time +
                "\n Meeting Type: " + meetingType +
                "\n Reason:       " + reason +
-               "\n Notes:        " + notes +
-EVA FIX THIS TAKE OUT THE OVERRIDE WHOLE PART IT IS BREAKING THE CODE KEEP EVERYTHING ABOVE THIS MESSAGE AND DELETE EVERYTHING BELOW
-
-               @Override
-public String toString()
-{
-    return "Name: " + name +
-           "\nGrade: " + grade +
-           "\nDay: " + day +
-           "\nDate: " + date +
-           "\nTime: " + time +
-           "\nReason: " + reason +
-           "\nMeeting Type: " + meetingType +
-           "\nNotes: " + notes;
-}
-
+               "\n Notes:        " + notes;
     }
 }
