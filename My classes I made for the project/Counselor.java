@@ -1,3 +1,4 @@
+// Simple class representing a counselor
 public class Counselor
 {
     private String name;

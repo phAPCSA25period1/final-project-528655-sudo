@@ -1,15 +1,13 @@
+// Represents a scheduled appointment
 public class Appointment
 {
     private Student student;
     private Counselor counselor;
-    private String day;
-    private String date;
-    private String time;
-    private String reason;
-    private String meetingType;
-    private String notes;
+    private String day, date, time, reason, meetingType, notes;
 
-    public Appointment(Student student, Counselor counselor, String day, String date, String time, String reason, String meetingType, String notes)
+    public Appointment(Student student, Counselor counselor,
+                       String day, String date, String time,
+                       String reason, String meetingType, String notes)
     {
         this.student = student;
         this.counselor = counselor;
@@ -21,29 +19,21 @@ public class Appointment
         this.notes = notes;
     }
 
-    // ── Getters needed by AppointmentManager ──
-    public String getDay()
-    {
-        return day;
-    }
-
-    public String getTime()
-    {
-        return time;
-    }
+    // Getters used by AppointmentManager
+    public String getDay() { return day; }
+    public String getTime() { return time; }
 
     public String toString()
     {
-        return
-               "\n    APPOINTMENT CONFIRMATION  " +
-               "\n Student:      " + student.getName() +
-               "\n Grade:        " + student.getGradeLevel() +
-               "\n Counselor:    " + counselor.getName() +
-               "\n Day:          " + day +
-               "\n Date:         " + date +
-               "\n Time:         " + time +
-               "\n Meeting Type: " + meetingType +
-               "\n Reason:       " + reason +
-               "\n Notes:        " + notes;
+        return "\n=== APPOINTMENT CONFIRMATION ===" +
+               "\nStudent: " + student.getName() +
+               "\nGrade: " + student.getGradeLevel() +
+               "\nCounselor: " + counselor.getName() +
+               "\nDay: " + day +
+               "\nDate: " + date +
+               "\nTime: " + time +
+               "\nType: " + meetingType +
+               "\nReason: " + reason +
+               "\nNotes: " + notes;
     }
 }

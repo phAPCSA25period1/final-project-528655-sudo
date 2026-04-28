@@ -1,3 +1,4 @@
+// Represents a student and assigns a counselor based on last name
 public class Student
 {
     private String name;
@@ -15,35 +16,28 @@ public class Student
     public int getGradeLevel() { return gradeLevel; }
     public Counselor getCounselor() { return counselor; }
 
+    // Assigns counselor based on last name ranges
     private Counselor assignCounselor(String fullName)
     {
         String[] parts = fullName.split(" ");
-        String lastName = parts[parts.length - 1].toUpperCase();
+        String last = parts[parts.length - 1].toUpperCase();
 
-        // Check ranges
-        if (lastName.compareTo("CAR") <= 0)
+        if (last.compareTo("CAR") <= 0)
             return new Counselor("Ms. Vaccarino");
-
-        else if (lastName.compareTo("GIZ") <= 0)
+        else if (last.compareTo("GIZ") <= 0)
             return new Counselor("Mrs. Lucio");
-
-        else if (lastName.compareTo("LEM") <= 0)
+        else if (last.compareTo("LEM") <= 0)
             return new Counselor("Mrs. Glazer");
-
-        else if (lastName.compareTo("NHAM") <= 0)
+        else if (last.compareTo("NHAM") <= 0)
             return new Counselor("Mrs. Labe");
-
-        else if (lastName.compareTo("SE") <= 0)
+        else if (last.compareTo("SE") <= 0)
             return new Counselor("Mr. Barrientos");
-
         else
             return new Counselor("Mr. Navickas");
     }
 
     public String toString()
     {
-        return "Student: " + name +
-               " (Grade " + gradeLevel + ")" +
-               " - " + counselor;
+        return name + " (Grade " + gradeLevel + ") - " + counselor;
     }
 }

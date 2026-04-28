@@ -1,64 +1,63 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+// Manages all appointments and available time slots
 public class AppointmentManager
 {
-    private static ArrayList<Appointment> appointments = new ArrayList<>();
+    // Stores all appointments
+    private static List<Appointment> appointments = new ArrayList<>();
 
-    public static final String[] SLOTS = {
-        "8:45 AM", "9:30 AM", "10:15 AM", "11:00 AM",
-        "11:45 AM", "12:30 PM", "1:15 PM", "2:00 PM",
-        "2:45 PM", "3:33 PM"
-    };
+    // Default schedule for each day
+    private static Map<String, List<String>> schedule = new HashMap<>();
 
+    static
+    {
+        // Initialize schedule
+        List<String> times = Arrays.asList(
+            "9:00 AM", "10:00 AM", "11:00 AM",
+            "1:00 PM", "2:00 PM", "3:00 PM"
+        );
+
+        schedule.put("Monday", new ArrayList<>(times));
+        schedule.put("Tuesday", new ArrayList<>(times));
+        schedule.put("Wednesday", new ArrayList<>(times));
+        schedule.put("Thursday", new ArrayList<>(times));
+        schedule.put("Friday", new ArrayList<>(times));
+    }
+
+    // Returns available slots for a given day
+    public static List<String> getAvailableSlots(String day)
+    {
+        List<String> available = new ArrayList<>(schedule.get(day));
+
+        for (Appointment a : appointments)
+        {
+            if (a.getDay().equalsIgnoreCase(day))
+            {
+                available.remove(a.getTime()); // remove booked slot
+            }
+        }
+
+        return available;
+    }
+
+    // Adds appointment to list
     public static void add(Appointment a)
     {
         appointments.add(a);
     }
 
-    public static boolean isSlotTaken(String day, String time)
-    {
-        for (Appointment a : appointments)
-        {
-            if (a.getDay().equalsIgnoreCase(day) && a.getTime().equalsIgnoreCase(time))
-                return true;
-        }
-        return false;
-    }
-
-    // Returns a list of slots still open for a given day
-    public static List<String> getAvailableSlots(String day)
-    {
-        List<String> available = new ArrayList<>();
-        for (String slot : SLOTS)
-        {
-            if (!isSlotTaken(day, slot))
-                available.add(slot);
-        }
-        return available;
-    }
-
+    // Displays all availability
     public static void showAvailability()
     {
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+        System.out.println("=== Weekly Availability ===");
 
-        System.out.println("     AVAILABILITY CALENDAR    ");
-
-        for (String day : days)
+        for (String day : schedule.keySet())
         {
-            System.out.println("\n" + day + ":");
-            for (String slot : SLOTS)
-            {
-                if (isSlotTaken(day, slot))
-                    System.out.println("   " + slot + " - BOOKED");
-                else
-                    System.out.println("   " + slot + " - Available");
-            }
+            System.out.println(day + ": " + schedule.get(day));
         }
-    }
-
-    public static boolean isEmpty()
-    {
-        return appointments.isEmpty();
     }
 }
