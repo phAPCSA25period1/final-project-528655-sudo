@@ -20,8 +20,12 @@ public class Appointment
     }
 
     // Getters used by AppointmentManager
-    public String getDay() { return day; }
-    public String getTime() { return time; }
+    public String getDay()         { return day; }
+    public String getDate()        { return date; }
+    public String getTime()        { return time; }
+    public String getReason()      { return reason; }
+    public String getMeetingType() { return meetingType; }
+    public String getNotes()       { return notes; }
 
     public String toString()
     {

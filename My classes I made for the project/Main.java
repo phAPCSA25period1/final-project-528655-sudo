@@ -179,8 +179,8 @@ public class Main
             notes
         );
 
-        // Add appointment to system
-        AppointmentManager.add(a);
+        // Add appointment to system (pass student so it can be saved)
+        AppointmentManager.add(a, s);
 
         // Print confirmation
         System.out.println(a);
