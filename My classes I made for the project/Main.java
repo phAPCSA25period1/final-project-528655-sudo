@@ -19,7 +19,7 @@ public class Main
         System.out.println();
 
         // ───────────── NAME INPUT ─────────────
-        System.out.print("Enter full name: ");
+        System.out.print("Enter first, then last name: ");
         String name = input.nextLine();
 
         // ───────────── GRADE INPUT (TRY-CATCH) ─────────────
